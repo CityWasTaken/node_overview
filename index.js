@@ -1,8 +1,18 @@
 const mathTools = {
     num1: 1,
     num2: 3,
-    sum: () => {
-    // sum: function(num1, num2) {
+    // sum: () => {
+    sum: function(num1, num2) {
+        const nested = () => {
+            console.log("nested", this.num1);
+            const moreNested = () => {
+                console.log("moreNested", this.num2)
+            }
+
+        moreNested();
+        }
+        nested();
+    
     // should return the sum of num1 and num2
     return this.num1 + this.num2;
     },
