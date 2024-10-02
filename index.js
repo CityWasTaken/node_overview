@@ -1,8 +1,5 @@
-const { log } = require('console');
 const fs = require('fs');
-const { clearInterval } = require('timers');
-const command = process.argv[2];
-const studentName = process.argv[3]
+const inquirer = require('inquirer');
 
 
 function spinWheel() {
@@ -10,7 +7,7 @@ function spinWheel() {
         if (error) {
             return console.log(error);
         }
-    
+
         const names = data.replace(/\r/g, '').split('\n');
         let cycleAmount = 30;
 
@@ -19,14 +16,16 @@ function spinWheel() {
             const index = Math.floor(ranNum * names.length);
 
             console.clear();
-            
+
 
             cycleAmount--;
-            
+
             if (cycleAmount === 0) {
                 clearInterval(cycle);
 
                 console.log(`${names[index]} You're up!`);
+
+                showMenu()
             } else {
                 console.log(names[index]);
             }
@@ -46,29 +45,35 @@ function addName() {
     });
 }
 
-function welcomeMessage() {
+function showMenu() {
     console.log(`
         --------
-        Welsome to the Randome Name Wheel!
-        
-        To use this app, type in one of the options:
-        -spin -- This will spin the wheel
-        -add -- This adds a name to the list
-        
+        Welsome to the Random Name Wheel!  
         -------
+
         `);
-    
+
+    const menuPromise = inquirer.prompt({
+        message: 'Please choose an option',
+        name: 'menuChoice', //This determines the answerObj's property that this answer will be stored to
+        type: 'list',
+        choices: ['Spin the Wheel', 'Add a student']
+    });
+
+    menuPromise.then((answerObj) => {
+        switch (answerObj.menuChoice) {
+            case 'Add a student':
+                addName();
+                break;
+            case 'Spin the Wheel':
+                spinWheel();
+        }
+    });
+
 }
 
 
-switch(command) {
-    case 'add':
-        addName();
-        break;
-    case 'spin':
-        spinWheel();
-} 
-
+showMenu();
 
 // if (command === 'add') {
 //     addName();
