@@ -1,25 +1,34 @@
-const data = {
-    name: "JD",
-    age: 44,
-    address: '555 coding dr',
-    info: {
-        location: "Atlanta",
-        county: "Cobb",
-        places: ["Lake Acworth", "Gorgia Aquarium"]
-    }
-};
+const { log } = require('console');
+const fs = require('fs');
+const { clearInterval } = require('timers');
 
-// within the {} write the properties you want to use from the object being referenced
-const {name, phone, info: {location}} = data;
+function spinWheel() {
+    fs.readFile('./names.txt', 'utf8', (error, data) => {
+        if (error) {
+            return console.log(error);
+        }
+    
+        const names = data.replace(/\r/g, '').split('\n');
+        let cycleAmount = 30;
 
-// console.log(location);
+        const cycle = setInterval(() => {
+            const ranNum = Math.random();
+            const index = Math.floor(ranNum * names.length);
 
-function printData({color, length}) {
-    console.log(length);
+            console.clear();
+            
+
+            cycleAmount--;
+            
+            if (cycleAmount === 0) {
+                clearInterval(cycle);
+
+                console.log(`${names[index]} You're up!`);
+            } else {
+                console.log(names[index]);
+            }
+        }, 75);
+    });
 }
 
-
-printData({
-    color: "blue",
-    length: 10
-})
+spinWheel();
