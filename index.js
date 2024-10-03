@@ -1,4 +1,3 @@
-const showMenu = require('./lib/showMenu.js');
+import mainMenu from "./lib/mainMenu.js";
 
-
-showMenu();
+mainMenu();
