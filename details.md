@@ -1,12 +1,8 @@
 
-## Full Name: asd
-- Phone: 6354654
-- Address: asda
+## Full Name: asda
+- Phone: asdas
+- Address: asdasd
 - Favorite Foods:
 <details>
--${foodStr}
--${foodStr}
--${foodStr}
--${foodStr}
-
+<p>American</p><p>Chinese</p><p>Thai</p><p>Mexican</p>
 </details>
